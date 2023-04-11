@@ -1,0 +1,29 @@
+import { useRef, useEffect } from "react";
+import Child from "./Child";
+export function Parent() {
+  const elementRef = useRef();
+
+  useEffect(() => {
+    // Does not work!
+    console.log(elementRef.current); // logs null
+  }, []);
+
+  return <Child ref={elementRef} />; // assign the ref
+}
+
+
+
+
+
+
+
+import { forwardRef } from "react";
+interface ChildComponentProps {
+  // specify the type of ref as RefObject<HTMLDivElement>
+  ref?: React.RefObject<HTMLDivElement>;
+}
+const Child = forwardRef<HTMLDivElement, ChildComponentProps>((props, ref) => {
+  return <div ref={ref}>Hello, World!</div>;
+});
+
+export default Child;
